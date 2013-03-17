@@ -1,0 +1,63 @@
+{
+    "hash": "c3ee27761875718ae536d2949713bfd1",
+    "packages": [
+        {
+            "name": "riimu/kit-classloader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Riimu/Kit-ClassLoader.git",
+                "reference": "bf4ac0273a48e609305fcdc719a985450e7c64f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Riimu/Kit-ClassLoader/zipball/bf4ac0273a48e609305fcdc719a985450e7c64f1",
+                "reference": "bf4ac0273a48e609305fcdc719a985450e7c64f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Riimu\\Kit\\ClassLoader": "src"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Riikka Kalliomäki",
+                    "email": "riikka.kalliomaki@gmail.com",
+                    "homepage": "http://riimu.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Class autoloading with support for PSR-0 autoloading",
+            "keywords": [
+                "autoloading",
+                "psr-0"
+            ],
+            "time": "2013-03-17 20:56:50"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "riimu/kit-classloader": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}

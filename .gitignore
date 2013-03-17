@@ -1,0 +1,4 @@
+library/
+nbproject/
+vendor/
+tests/coverage/

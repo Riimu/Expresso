@@ -1,18 +1,16 @@
 <?php
 
-namespace Riimu\Expresso;
+namespace Riimu\Expresso\Context;
+
+use Riimu\Expresso\Library;
 
 /**
  * @author Riikka Kalliomäki <riikka.kalliomaki@gmail.com>
  * @copyright Copyright (c) 2013, Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class NamespaceHandler
+class NamespaceContext
 {
-    const OPERATOR_TYPE_BINARY = 1;
-
-    const OPERATOR_ASSOCIATIVITY_LEFT = 1;
-
     private $operators;
 
     public function __construct()
@@ -40,8 +38,21 @@ class NamespaceHandler
             'precedence' => $precedence,
         ];
 
-        if ($type === self::OPERATOR_TYPE_BINARY) {
-            $this->operators['binary'][$symbol] = $operator;
+        if ($type === Library\Operator::BINARY) {
+            $this->operators['binary'][$infixToken] = $operator;
         }
+    }
+
+    public function getBinaryOperator($infixToken)
+    {
+        $data = $this->operators['binary'][$infixToken];
+        return new Library\Operator($data['callback'], $data['rpnToken'],
+            $data['infixToken'], $data['type'], $data['associativity'],
+            $data['precedence']);
+    }
+
+    public function getBinaryOperatorTokens()
+    {
+        return array_keys($this->operators['binary']);
     }
 }

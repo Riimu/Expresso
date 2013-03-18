@@ -9,5 +9,8 @@ namespace Riimu\Expresso\Number\Internal;
  */
 class Factory extends \Riimu\Expresso\Number\Factory
 {
-
+    public function createInteger($string)
+    {
+        return new Number($string + 0);
+    }
 }

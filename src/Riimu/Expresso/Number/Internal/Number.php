@@ -9,5 +9,24 @@ namespace Riimu\Expresso\Number\Internal;
  */
 class Number extends \Riimu\Expresso\Number\Number
 {
+    private $value;
 
+    public function __construct($value)
+    {
+        if (!is_int($value) && !is_float($value)) {
+            throw new \InvalidArgumentException("Internal number must be integer or float");
+        }
+
+        $this->value = $value;
+    }
+
+    public function getReal()
+    {
+        return $this->value;
+    }
+
+    public function getRPNToken()
+    {
+        return (string) $this->value;
+    }
 }

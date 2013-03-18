@@ -1,0 +1,4 @@
+1   When attempting to tokenize the parsed string, the string did no match any
+    of the patterns in the current context.
+2   If the parser is expecting a value, but the end of the string is reached.
+    This will also be caused if the string contains no tokens to parse.

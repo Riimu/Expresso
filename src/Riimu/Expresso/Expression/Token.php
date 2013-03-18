@@ -7,7 +7,12 @@ namespace Riimu\Expresso\Expression;
  * @copyright Copyright (c) 2013, Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class Token
+abstract class Token
 {
+    abstract public function getRPNToken();
 
+    public function __toString()
+    {
+        return $this->getRPNToken();
+    }
 }

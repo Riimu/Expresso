@@ -7,7 +7,10 @@ namespace Riimu\Expresso\Expression;
  * @copyright Copyright (c) 2013, Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class Number extends Token
+abstract class Number extends Value
 {
-
+    public function getPrimitive()
+    {
+        return $this->getReal();
+    }
 }

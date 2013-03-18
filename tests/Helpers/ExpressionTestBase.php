@@ -29,4 +29,10 @@ class ExpressionTestBase extends PHPUnit_Framework_TestCase
         $result = self::$parser->parse($expression)->getPrimitive();
         $this->assertEquals($expected, $result);
     }
+
+    protected function assertRPNEquals($expected, $expression)
+    {
+        $result = (string) self::$parser->parse($expression);
+        $this->assertEquals($expected, $result);
+    }
 }

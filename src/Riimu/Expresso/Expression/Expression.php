@@ -60,7 +60,7 @@ class Expression extends Value
         if (!($result instanceof Value)) {
             $name = is_object($result) ? get_class($result) : gettype($result);
             throw new \UnexpectedValueException("Call return value " .
-                "must of instance of Expression\Value, got '$name'");
+                "must be instance of Expression\Value, got '$name'");
         }
 
         return $result;

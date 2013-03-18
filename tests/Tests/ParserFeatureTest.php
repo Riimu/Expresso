@@ -5,8 +5,10 @@
  * @copyright Copyright (c) 2013, Riikka Kalliomäki
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class ParserFeatureTest extends ExpressionTestBase
+class ParserFeatureTest extends PHPUnit_Framework_TestCase
 {
+    use \Helpers\ExpressionTester;
+
     public function testIntegerParsing()
     {
         $this->assertExpression(136, '37 + 99');
@@ -28,5 +30,22 @@ class ParserFeatureTest extends ExpressionTestBase
     public function testWhiteSpace()
     {
         $this->assertExpression(10, '4+2*3');
+    }
+
+    public function testRightAssociativity()
+    {
+        $this->assertExpression(65536, '4 ^ 2 ^ 3');
+        $this->assertExpression(21, '2 + 4 ^ 2 + 3');
+    }
+
+    public function testPreOperators()
+    {
+        $this->assertExpression(-42, '-42');
+        $this->assertExpression(42, '- -42');
+    }
+
+    public function testPostOperators()
+    {
+        $this->assertExpression(24, "4!");
     }
 }

@@ -11,13 +11,16 @@ class Token
 {
     const TYPE_INTEGER = 1;
     const TYPE_BINARY_OPERATOR = 2;
+    const TYPE_UNARY_PRE_OPERATOR = 3;
+    const TYPE_UNARY_POST_OPERATOR = 4;
 
     private static $numberTypes = [
         self::TYPE_INTEGER
     ];
 
     private static $operatorTypes = [
-        self::TYPE_BINARY_OPERATOR
+        self::TYPE_BINARY_OPERATOR, self::TYPE_UNARY_PRE_OPERATOR,
+        self::TYPE_UNARY_POST_OPERATOR,
     ];
 
     private $type;

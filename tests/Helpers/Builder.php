@@ -11,17 +11,45 @@ use Riimu\Expresso as Lib;
  */
 class Builder
 {
-    private static $standardContext;
+    private static $standardNamespace;
+    private static $standardTokenizer;
+
+    public static function standardNamespace()
+    {
+        if (!isset(self::$standardNamespace)) {
+            $namespace = new Lib\Context\NamespaceContext();
+
+            $namespace->addLibrary(new Lib\Library\InternalMath\InternalFunctions());
+            $namespace->addLibrary(new Lib\Library\InternalMath\InternalOperators());
+            $namespace->addLibrary(new Lib\Library\InternalMath\AdditionalOperators());
+
+            self::$standardNamespace = $namespace;
+        }
+
+        return clone self::$standardNamespace;
+    }
 
     public static function standardContext()
     {
-        if (!isset(self::$standardContext)) {
-            $namespace = new Lib\Context\NamespaceContext();
-            $namespace->addLibrary(new Lib\Library\InternalMath\InternalFunctions());
-            $namespace->addLibrary(new Lib\Library\InternalMath\InternalOperators());
-            self::$standardContext = new Lib\Context\Context($namespace);
+        $context = new Lib\Context\Context(self::standardNamespace());
+        return $context;
+    }
+
+    public static function standarTokenizer()
+    {
+        if (!isset(self::$standardTokenizer)) {
+            self::$standardTokenizer =
+                new Lib\Parser\Infix\Tokenizer(self::standardNamespace());
         }
 
-        return clone self::$standardContext;
+        return clone self::$standardTokenizer;
+    }
+
+    public static function standardParser()
+    {
+        $parser = new Lib\Parser\Infix\Parser(self::standardContext(),
+            new Lib\Number\Internal\Factory());
+        $parser->setTokenizer(self::standarTokenizer());
+        return $parser;
     }
 }

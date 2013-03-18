@@ -13,11 +13,13 @@ use Riimu\Expresso\Number\Internal\Number;
  */
 class InternalOperators extends \Riimu\Expresso\Library\Library
 {
-    protected static $operators = [
+    protected $operators = [
         ['sum', '+', '+', Op::BINARY, Op::LEFT, Op::PREC_SUM_DIFFERENCE],
         ['difference', '-', '-', Op::BINARY, Op::LEFT, Op::PREC_SUM_DIFFERENCE],
         ['product', '*', '*', Op::BINARY, Op::LEFT, Op::PREC_PRODUCT_QUOTIENT],
         ['quotient', '/', '/', Op::BINARY, Op::LEFT, Op::PREC_PRODUCT_QUOTIENT],
+        ['positive', '+$', '+', Op::UNARY, Op::RIGHT, Op::PREC_MINUS_PLUS],
+        ['negative', '-$', '-', Op::UNARY, Op::RIGHT, Op::PREC_MINUS_PLUS],
     ];
 
     public static function sum(Arguments $arg)
@@ -38,5 +40,15 @@ class InternalOperators extends \Riimu\Expresso\Library\Library
     public static function quotient(Arguments $arg)
     {
         return new Number($arg->getReal(0) / $arg->getReal(1));
+    }
+
+    public static function positive(Arguments $arg)
+    {
+        return new Number(+$arg->getReal(0));
+    }
+
+    public static function negative(Arguments $arg)
+    {
+        return new Number(-$arg->getReal(0));
     }
 }

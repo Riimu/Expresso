@@ -1,5 +1,6 @@
 <?php
 
+use Helpers\Builder as Build;
 use Riimu\Expresso as Lib;
 
 /**
@@ -11,7 +12,7 @@ class ErrorCaseTest extends PHPUnit_Framework_TestCase
 {
     public function testUnexpectedCharacter()
     {
-        $parser = $this->getStandardParser();
+        $parser = Build::standardParser();
 
         try {
             $parser->parse('1 `+ 1');
@@ -31,7 +32,7 @@ class ErrorCaseTest extends PHPUnit_Framework_TestCase
      */
     public function testUnexpectedEnd()
     {
-        $parser = $this->getStandardParser();
+        $parser = Build::standardParser();
         $parser->parse('1 + ');
     }
 
@@ -41,20 +42,5 @@ class ErrorCaseTest extends PHPUnit_Framework_TestCase
     public function testInvalidInternalNumberValue()
     {
         new Lib\Number\Internal\Number('1');
-    }
-
-    private function getStandardParser()
-    {
-        $factory = new Lib\Number\Internal\Factory();
-        $context = $this->getStandardContext();
-        return new Lib\Parser\Infix\Parser($context, $factory);
-    }
-
-    private function getStandardContext()
-    {
-        $namespace = new Lib\Context\NamespaceContext();
-        $namespace->addLibrary(new Lib\Library\InternalMath\InternalFunctions());
-        $namespace->addLibrary(new Lib\Library\InternalMath\InternalOperators());
-        return new Lib\Context\Context($namespace);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace Riimu\Expresso\Parser\Infix;
 
+use Riimu\Expresso\Context\NamespaceContext as NS;
 use Riimu\Expresso\Context\Context;
 use Riimu\Expresso\Number\Factory;
 use Riimu\Expresso\Expression;
 use Riimu\Expresso\Parser\ParsingException;
-use Riimu\Expresso\Library\Operator as op;
+use Riimu\Expresso\Library\Operator as Op;
 
 /**
  * @author Riikka Kalliomäki <riikka.kalliomaki@gmail.com>
@@ -32,6 +33,11 @@ class Parser extends \Riimu\Expresso\Parser\Parser
         $this->output = [];
         $this->stack = [];
         $this->valueContext = true;
+    }
+
+    public function setTokenizer(Tokenizer $tokenizer)
+    {
+        $this->tokenizer = $tokenizer;
     }
 
     public function getTokenizer()
@@ -88,14 +94,22 @@ class Parser extends \Riimu\Expresso\Parser\Parser
     private function pushOperator(Token $token)
     {
         if ($token->getType() === Token::TYPE_BINARY_OPERATOR) {
-            $o1 = $this->namespace->getBinaryOperator($token->getString());
+            $o1 = $this->namespace->getOperator($token->getString(), NS::BINARY_OPERATOR);
+        } elseif ($token->getType() === Token::TYPE_UNARY_PRE_OPERATOR) {
+            $o1 = $this->namespace->getOperator($token->getString(), NS::PRE_OPERATOR);
+        } elseif ($token->getType() === Token::TYPE_UNARY_POST_OPERATOR) {
+            $o1 = $this->namespace->getOperator($token->getString(), NS::POST_OPERATOR);
         }
 
         while(($top = end($this->stack)) && $top->isOperator()) {
             $o2 = $top->getOperator();
 
-            if ($o1->getAssociativity() === op::LEFT) {
+            if ($o1->getAssociativity() === Op::LEFT) {
                 if ($o1->getPrecedence() > $o2->getPrecedence()) {
+                    break;
+                }
+            } else {
+                if ($o1->getPrecedence() >= $o2->getPrecedence()) {
                     break;
                 }
             }
@@ -106,7 +120,13 @@ class Parser extends \Riimu\Expresso\Parser\Parser
 
         $token->setOperator($o1);
         $this->stack[] = $token;
-        $this->valueContext = true;
+
+        if ($token->getType() === Token::TYPE_BINARY_OPERATOR ||
+            $token->getType() === Token::TYPE_UNARY_PRE_OPERATOR) {
+            $this->valueContext = true;
+        } elseif ($token->getType() === Token::TYPE_UNARY_POST_OPERATOR) {
+            $this->valueContext = false;
+        }
     }
 
     private function pushFromStack(Token $token)

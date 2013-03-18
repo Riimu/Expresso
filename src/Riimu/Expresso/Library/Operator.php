@@ -11,12 +11,17 @@ use Riimu\Expresso\Expression\Call as ExpressionCall;
  */
 class Operator
 {
-    const BINARY = 1;
+    const UNARY = 1;
+    const BINARY = 2;
 
     const LEFT = 10;
+    const RIGHT = 11;
 
     const PREC_SUM_DIFFERENCE = 100;
     const PREC_PRODUCT_QUOTIENT = 101;
+    const PREC_POWER = 102;
+    const PREC_FACTORIAL = 103;
+    const PREC_MINUS_PLUS = 104;
 
     private $callback;
     private $rpnToken;

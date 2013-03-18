@@ -2,6 +2,8 @@
 
 namespace Riimu\Expresso\Context;
 
+use Riimu\Expresso\Library\ArgumentsException;
+
 /**
  * @author Riikka Kalliomäki <riikka.kalliomaki@gmail.com>
  * @copyright Copyright (c) 2013, Riikka Kalliomäki
@@ -19,5 +21,10 @@ class ArgumentContext
     public function getReal($n)
     {
         return $this->arguments[$n]->getReal();
+    }
+
+    public function throwException($message)
+    {
+        throw new ArgumentsException($message, $this);
     }
 }

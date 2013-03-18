@@ -11,12 +11,12 @@ use Riimu\Expresso\Context\NamespaceContext;
  */
 abstract class Library
 {
-    protected static $operators = [];
+    protected $operators = [];
 
     public function addToNamespace(NamespaceContext $namespace)
     {
-        if (!empty(static::$operators)) {
-            $this->addOperators($namespace, static::$operators, get_class($this));
+        if (!empty($this->operators)) {
+            $this->addOperators($namespace, $this->operators, get_class($this));
         }
     }
 

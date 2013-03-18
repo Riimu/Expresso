@@ -2,7 +2,7 @@
 
 namespace Riimu\Expresso\Parser\Infix;
 
-use Riimu\Expresso\Context\NamespaceContext;
+use Riimu\Expresso\Context\NamespaceContext as NS;
 use Riimu\Expresso\Parser\ParsingException;
 
 /**
@@ -20,16 +20,22 @@ class Tokenizer
     const WHITESPACE_PATTERN = '/\G\s+/';
     const INTEGER_PATTERN = '/\G[+-]?\d+/';
 
-    public function __construct(NamespaceContext $namespace)
+    public function __construct(NS $namespace)
     {
         $this->string = '';
         $this->position = 0;
 
+        $binaryOperators = $this->createOperatorPattern($namespace->getOperatorTokens(NS::BINARY_OPERATOR));
+        $preOperators = $this->createOperatorPattern($namespace->getOperatorTokens(NS::PRE_OPERATOR));
+        $postOperators = $this->createOperatorPattern($namespace->getOperatorTokens(NS::POST_OPERATOR));
+
         $this->valuePatterns = [
             [Token::TYPE_INTEGER, self::INTEGER_PATTERN],
+            [Token::TYPE_UNARY_PRE_OPERATOR, $preOperators],
         ];
         $this->operatorPatterns = [
-            [Token::TYPE_BINARY_OPERATOR, $this->createOperatorPattern($namespace->getBinaryOperatorTokens())],
+            [Token::TYPE_UNARY_POST_OPERATOR, $postOperators],
+            [Token::TYPE_BINARY_OPERATOR, $binaryOperators],
         ];
     }
 

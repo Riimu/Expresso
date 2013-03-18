@@ -3,18 +3,24 @@
 Expresso is an mathematic expression parsing and evaluation engine written in
 PHP. It's also mostly still under construction.
 
-## What to do next? ##
+## What's next on the agenda? ##
 
-- Implement expression parsing for simple 1 + 1 expression
-- Implement expression evaluation for simple 1 + 1 expression
+Things that I intend to focus next.
+
+- Implement rest of the internal operators dealing with real values
+- Add support for parenthesis
+- Add support for functions
 
 ## Long term plans ##
 
-- Caching of namespace and tokenizer for faster loading
-- Support for RPN notation parsing
-- Support for different modes of calculation
+This I intend to focus at some point in the later future. Items listed in
+relative order of importance.
+
+- Closures
 - Variables
 - Arrays
-- Closures
 - Command line interface
 - Web browser interface
+- RPN Notation parsing & validation
+- Different number handling modes (i.e. BCMath)
+- Caching for namespace and tokenizer for faster loading
